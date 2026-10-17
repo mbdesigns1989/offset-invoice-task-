@@ -58,7 +58,7 @@ export function DocumentViewer({ fileUrl, fileKind, fields, activeField, onBoxCl
 
   return (
     <div
-      className="relative overflow-hidden rounded-lg border border-gray-300 bg-white shadow-sm"
+      className="relative shrink-0 overflow-hidden rounded-2xl border border-black/10 bg-white shadow-[0_1px_2px_rgba(16,24,40,0.04),0_8px_24px_-4px_rgba(16,24,40,0.08)]"
       style={{ width: DOCUMENT_PAGE_WIDTH, height: DOCUMENT_PAGE_HEIGHT }}
     >
       {fileKind === "image" ? (
@@ -91,8 +91,10 @@ export function DocumentViewer({ fileUrl, fileKind, fields, activeField, onBoxCl
               type="button"
               onClick={() => onBoxClick(f.field)}
               title={`${f.field}: ${f.value}`}
-              className={`absolute border-2 transition-colors ${
-                isActive ? "border-blue-600 bg-blue-500/20" : "border-amber-500 bg-amber-400/10 hover:bg-amber-400/25"
+              className={`absolute rounded-[3px] border-2 transition-all ${
+                isActive
+                  ? "border-accent bg-accent/15 shadow-[0_0_0_3px_rgba(79,70,229,0.15)]"
+                  : "border-amber-400 bg-amber-300/10 hover:border-amber-500 hover:bg-amber-300/20"
               }`}
               style={{
                 left: x0,

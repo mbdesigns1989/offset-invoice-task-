@@ -33,8 +33,10 @@ export function FieldPanel({ fields, activeField, onFieldSelect, onFieldChange, 
   }
 
   return (
-    <div className="flex w-80 flex-col gap-3">
-      <h2 className="text-sm font-semibold text-gray-700">Extracted fields</h2>
+    <div className="flex w-80 shrink-0 flex-col gap-3">
+      <h2 className="px-1 text-xs font-semibold uppercase tracking-wider text-foreground/40">
+        Extracted fields
+      </h2>
       {fields.map((f) => {
         const isActive = activeField === f.field;
         const isEditing = editingField === f.field;
@@ -43,17 +45,27 @@ export function FieldPanel({ fields, activeField, onFieldSelect, onFieldChange, 
           <div
             key={f.field}
             onClick={() => onFieldSelect(f.field)}
-            className={`cursor-pointer rounded-lg border p-3 transition-colors ${
-              isActive ? "border-blue-500 bg-blue-50" : "border-gray-200 bg-white hover:border-gray-300"
+            className={`cursor-pointer rounded-xl border bg-white p-4 shadow-[0_1px_2px_rgba(16,24,40,0.04)] transition-all ${
+              isActive
+                ? "border-accent ring-2 ring-accent/20"
+                : "border-black/10 hover:border-accent/30 hover:shadow-[0_2px_8px_rgba(16,24,40,0.06)]"
             }`}
           >
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium uppercase tracking-wide text-gray-500">
+              <span className="text-[11px] font-semibold uppercase tracking-wide text-foreground/40">
                 {formatLabel(f.field)}
               </span>
-              <div className="flex items-center gap-1">
-                {f.approved && <span className="text-xs text-green-600">Approved</span>}
-                {f.edited && <span className="text-xs text-amber-600">Edited</span>}
+              <div className="flex items-center gap-1.5">
+                {f.approved && (
+                  <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[11px] font-medium text-emerald-700">
+                    Approved
+                  </span>
+                )}
+                {f.edited && (
+                  <span className="rounded-full bg-amber-50 px-2 py-0.5 text-[11px] font-medium text-amber-700">
+                    Edited
+                  </span>
+                )}
               </div>
             </div>
 
@@ -68,20 +80,20 @@ export function FieldPanel({ fields, activeField, onFieldSelect, onFieldChange, 
                   if (e.key === "Enter") commitEdit(f.field);
                   if (e.key === "Escape") setEditingField(null);
                 }}
-                className="mt-1 w-full rounded border border-blue-400 px-2 py-1 text-sm focus:outline-none"
+                className="mt-1.5 w-full rounded-lg border border-accent px-2.5 py-1.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/20"
               />
             ) : (
-              <p className="mt-1 text-sm text-gray-900">{f.value}</p>
+              <p className="mt-1.5 text-[15px] font-medium text-foreground">{f.value}</p>
             )}
 
-            <div className="mt-2 flex gap-2">
+            <div className="mt-3 flex gap-2">
               <button
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();
                   startEditing(f);
                 }}
-                className="rounded bg-gray-100 px-2 py-1 text-xs font-medium text-gray-700 hover:bg-gray-200"
+                className="rounded-lg bg-black/[0.04] px-2.5 py-1.5 text-xs font-medium text-foreground/70 transition-colors hover:bg-black/[0.08]"
               >
                 Edit
               </button>
@@ -91,7 +103,7 @@ export function FieldPanel({ fields, activeField, onFieldSelect, onFieldChange, 
                   e.stopPropagation();
                   onFieldApprove(f.field);
                 }}
-                className="rounded bg-green-100 px-2 py-1 text-xs font-medium text-green-700 hover:bg-green-200"
+                className="rounded-lg bg-emerald-50 px-2.5 py-1.5 text-xs font-medium text-emerald-700 transition-colors hover:bg-emerald-100"
               >
                 Approve
               </button>

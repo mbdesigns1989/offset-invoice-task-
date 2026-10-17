@@ -37,19 +37,56 @@ export default function Home() {
     );
   }
 
-  return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <div className="mx-auto max-w-5xl">
-        <h1 className="mb-1 text-xl font-semibold text-gray-900">Invoice Data Review</h1>
-        <p className="mb-6 text-sm text-gray-500">
-          Upload an invoice, review the extracted fields, and click a value to find it on the
-          document.
-        </p>
+  const approvedCount = fields.filter((f) => f.approved).length;
 
+  return (
+    <div className="min-h-screen">
+      <header className="border-b border-black/5 bg-white">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-8 py-5">
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-sm font-semibold text-white">
+              ID
+            </div>
+            <div>
+              <h1 className="text-base font-semibold leading-tight text-foreground">
+                Invoice Data Review
+              </h1>
+              <p className="text-xs text-foreground/50">
+                Where every number on the page can be checked.
+              </p>
+            </div>
+          </div>
+
+          {file && (
+            <div className="flex items-center gap-4">
+              <span className="text-sm text-foreground/60">
+                {approvedCount} / {fields.length} approved
+              </span>
+              <button
+                type="button"
+                onClick={() => setFile(null)}
+                className="rounded-lg border border-black/10 bg-white px-3 py-1.5 text-sm font-medium text-foreground/70 transition-colors hover:bg-black/[0.03]"
+              >
+                New document
+              </button>
+            </div>
+          )}
+        </div>
+      </header>
+
+      <main className="mx-auto max-w-6xl px-8 py-10">
         {!file || !fileUrl || !fileKind ? (
-          <UploadDropzone onFileSelected={handleFileSelected} />
+          <div className="mx-auto max-w-2xl">
+            <div className="mb-6 text-center">
+              <h2 className="text-lg font-semibold text-foreground">Review an invoice</h2>
+              <p className="mt-1 text-sm text-foreground/50">
+                Upload a PDF or image. We will show you exactly where each number came from.
+              </p>
+            </div>
+            <UploadDropzone onFileSelected={handleFileSelected} />
+          </div>
         ) : (
-          <div className="flex items-start gap-6">
+          <div className="flex items-start gap-8">
             <DocumentViewer
               fileUrl={fileUrl}
               fileKind={fileKind}
@@ -66,17 +103,7 @@ export default function Home() {
             />
           </div>
         )}
-
-        {file && (
-          <button
-            type="button"
-            onClick={() => setFile(null)}
-            className="mt-6 text-sm text-gray-500 underline hover:text-gray-700"
-          >
-            Upload a different document
-          </button>
-        )}
-      </div>
+      </main>
     </div>
   );
 }

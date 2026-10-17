@@ -34,14 +34,33 @@ export function UploadDropzone({ onFileSelected }: UploadDropzoneProps) {
         handleFiles(e.dataTransfer.files);
       }}
       onClick={() => inputRef.current?.click()}
-      className={`flex h-64 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed text-center transition-colors ${
-        isDragOver ? "border-blue-500 bg-blue-50" : "border-gray-300 bg-gray-50 hover:bg-gray-100"
+      className={`group flex h-72 w-full cursor-pointer flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed text-center transition-all ${
+        isDragOver
+          ? "border-accent bg-accent-soft scale-[1.01]"
+          : "border-black/10 bg-white hover:border-accent/40 hover:bg-accent-soft/40"
       }`}
     >
-      <p className="text-sm font-medium text-gray-700">
-        Drag & drop an invoice (PDF or image) here, or click to browse
-      </p>
-      <p className="text-xs text-gray-400">PDF, PNG, JPG</p>
+      <div
+        className={`flex h-14 w-14 items-center justify-center rounded-full transition-colors ${
+          isDragOver ? "bg-accent text-white" : "bg-accent-soft text-accent"
+        }`}
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path
+            d="M12 16V4M12 4L7 9M12 4l5 5M5 20h14"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </div>
+      <div>
+        <p className="text-sm font-medium text-foreground">
+          Drag & drop an invoice here, or click to browse
+        </p>
+        <p className="mt-1 text-xs text-foreground/40">PDF, PNG, or JPG</p>
+      </div>
       <input
         ref={inputRef}
         type="file"
