@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Offset — Invoice Data Review (take-home task)
 
-## Getting Started
+A small React/TypeScript app that lets a user upload an invoice (PDF or image), see it rendered on
+screen with the extracted fields highlighted at their source location, and approve or correct each
+value.
 
-First, run the development server:
+## What it does
+
+1. **Upload** — drag-and-drop or browse for a PDF or image invoice.
+2. **Document viewer** — renders the uploaded file (PDF via `pdfjs-dist`, images natively).
+3. **Mock extraction** — loads a hardcoded JSON payload shaped like an OCR API response
+   (`invoice_number`, `date`, `total_amount`, each with a `bbox`).
+4. **Highlight boxes** — draws a box over each field's source location on the document.
+5. **Click-to-source** — clicking a field in the side panel highlights its box on the document, and
+   vice versa.
+6. **Review** — each field can be approved or edited inline; edited fields are marked "Edited",
+   approved fields "Approved".
+
+## Running locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Notes / what I'd improve with more time
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Bounding boxes assume a fixed document page size (612×792, i.e. US Letter at 72dpi) to match the
+  mock data's coordinate space. A real integration would read the actual rendered page dimensions
+  from the OCR response instead of assuming a fixed size.
+- Manual "draw a new box" and multi-page support are not implemented (bonus items) — scoped out to
+  keep the 6 core requirements solid within the time limit.
+- No automated tests included given the scope; verified manually end-to-end (upload → highlight →
+  click-to-source → edit → approve).
